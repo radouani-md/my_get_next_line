@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:15:49 by mradouan          #+#    #+#             */
-/*   Updated: 2024/12/05 15:25:21 by mradouan         ###   ########.fr       */
+/*   Updated: 2024/12/05 22:26:25 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <libc.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+#  define BUFFER_SIZE 2147483647
 #endif
 
 char 	*get_next_line(int fd);

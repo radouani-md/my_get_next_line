@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 14:47:10 by mradouan          #+#    #+#             */
-/*   Updated: 2024/12/05 15:26:33 by mradouan         ###   ########.fr       */
+/*   Updated: 2024/12/05 19:39:30 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,25 +97,14 @@ size_t	ft_strlen(char *s)
 char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*result;
-	size_t	len1;
-	size_t	len2;
+	size_t	len1 = ft_strlen(s1);
+	size_t	len2 = ft_strlen(s2);
 
-	if (!s1 && !s2)
-		return (NULL);
-	else if (!s1)
-		return (ft_strdup(s2));
-	else if (!s2)
-		return (ft_strdup(s1));
-	len1 = ft_strlen(s1);
-	len2 = ft_strlen(s2);
 	result = malloc(len1 + len2 + 1);
 	if (!result)
-		return (free(s1), NULL);
-		
-	if (s1)
-		ft_strncpy(result, s1, len1 + 1);
-	if (s2)
-		ft_strncpy(result + len1, s2, len2 + 1);
+		return (NULL);
+	ft_strncpy(result, s1, len1);
+	ft_strncpy(result + len1, s2, len2 + 1);
 	free(s1);
 	return (result);
 }
