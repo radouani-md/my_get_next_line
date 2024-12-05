@@ -6,11 +6,33 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:59:30 by mradouan          #+#    #+#             */
-/*   Updated: 2024/12/05 22:34:49 by mradouan         ###   ########.fr       */
+/*   Updated: 2024/12/05 23:36:05 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+char	*check_read(int fd, char *buffer)
+{
+	char	*temp;
+	ssize_t	read_bytes;
+	
+	if (BUFFER_SIZE >= INT_MAX)
+		return (NULL);
+	temp = malloc(BUFFER_SIZE + 1);
+	if (!temp)
+		return (NULL);
+	
+	while (!ft_strchr(buffer, '\n') && (read_bytes = read(fd, temp, BUFFER_SIZE)) > 0)
+	{
+		temp[read_bytes] = '\0';
+		buffer = ft_strjoin(buffer, temp);
+		if (!buffer)
+			break;
+	}
+	free(temp);
+	return (buffer);
+}
 
 
 char	*get_next(char *buffer)
@@ -57,32 +79,13 @@ char *get_the_line(char *buffer)
 	return(retu);
 }
 
-char	*check_read(int fd, char *buffer)
-{
-	char	*temp = malloc(BUFFER_SIZE + 1);
-	ssize_t	read_bytes;
-	
-	
-	if (!temp)
-		return (NULL);
-	if (!buffer)
-		buffer = ft_strdup("");
-	while (!ft_strchr(buffer, '\n') && (read_bytes = read(fd, temp, BUFFER_SIZE)) > 0)
-	{
-		temp[read_bytes] = '\0';
-		buffer = ft_strjoin(buffer, temp);
-		if (!buffer)
-			break;
-	}
-	free(temp);
-	return (buffer);
-}
+
 char	*get_next_line(int fd)
 {
 	static char	*buffer;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0 || BUFFER_SIZE >= INT_MAX)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0  )
 		return (free(buffer), buffer = NULL);
 	buffer = check_read(fd, buffer);
 	if (!buffer)

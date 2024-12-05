@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 14:47:10 by mradouan          #+#    #+#             */
-/*   Updated: 2024/12/05 19:39:30 by mradouan         ###   ########.fr       */
+/*   Updated: 2024/12/05 23:35:51 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,27 +30,6 @@ char	*ft_strncpy(char *dest, char const *src, unsigned int n)
 	return (dest);
 }
 
-char	*ft_substr(char *s, unsigned int start, size_t len)
-{
-	size_t	i;
-	char	*sub;
-
-	if (s == NULL)
-		return (NULL);
-	i = 0;
-	while (s[i])
-		i++;
-	if (i <= start)
-		return (ft_strdup(""));
-	if (start + len > i)
-		len = i - start;
-	sub = malloc(len + 1);
-	if (sub == NULL)
-		return (NULL);
-	ft_strncpy(sub, s + start, len);
-	sub[len] = '\0';
-	return (sub);
-}
 
 char	*ft_strdup(char *src)
 {
@@ -74,6 +53,8 @@ char	*ft_strdup(char *src)
 
 char	*ft_strchr(const char *s, int c)
 {
+	if (!s)
+		return (NULL);
 	while (*s)
 	{
 		if (*s == (char)c)
@@ -97,9 +78,15 @@ size_t	ft_strlen(char *s)
 char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*result;
-	size_t	len1 = ft_strlen(s1);
-	size_t	len2 = ft_strlen(s2);
+	size_t	len2;
+	size_t	len1;
 
+	if (!s1)
+		return (ft_strdup(s2));
+	if (!s2)
+		return (ft_strdup(s1));
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
 	result = malloc(len1 + len2 + 1);
 	if (!result)
 		return (NULL);
