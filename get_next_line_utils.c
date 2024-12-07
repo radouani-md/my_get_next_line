@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 14:47:10 by mradouan          #+#    #+#             */
-/*   Updated: 2024/12/05 23:35:51 by mradouan         ###   ########.fr       */
+/*   Updated: 2024/12/07 12:52:41 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ char	*ft_strncpy(char *dest, char const *src, unsigned int n)
 	}
 	return (dest);
 }
-
 
 char	*ft_strdup(char *src)
 {
@@ -75,6 +74,7 @@ size_t	ft_strlen(char *s)
 		i++;
 	return (i);
 }
+
 char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*result;

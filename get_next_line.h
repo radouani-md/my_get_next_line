@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:15:49 by mradouan          #+#    #+#             */
-/*   Updated: 2024/12/05 23:37:42 by mradouan         ###   ########.fr       */
+/*   Updated: 2024/12/07 13:19:14 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 # include <libc.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE  -5
-#endif
+#  define BUFFER_SIZE 42
+# endif
 
-char 	*get_next_line(int fd);
+char	*get_next_line(int fd);
 char	*ft_strncpy(char *dest, char const *src, unsigned int n);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strjoin(char *s1, char *s2);
