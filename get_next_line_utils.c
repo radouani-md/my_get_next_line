@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 14:47:10 by mradouan          #+#    #+#             */
-/*   Updated: 2024/12/07 12:52:41 by mradouan         ###   ########.fr       */
+/*   Updated: 2024/12/07 23:25:08 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,7 @@ size_t	ft_strlen(char *s)
 char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*result;
-	size_t	len2;
-	size_t	len1;
+	size_t	len1, len2;
 
 	if (!s1)
 		return (ft_strdup(s2));
@@ -92,6 +91,5 @@ char	*ft_strjoin(char *s1, char *s2)
 		return (NULL);
 	ft_strncpy(result, s1, len1);
 	ft_strncpy(result + len1, s2, len2 + 1);
-	free(s1);
 	return (result);
 }

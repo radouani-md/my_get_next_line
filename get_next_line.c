@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:59:30 by mradouan          #+#    #+#             */
-/*   Updated: 2024/12/07 13:14:28 by mradouan         ###   ########.fr       */
+/*   Updated: 2024/12/07 23:30:32 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 char	*check_read(int fd, char *buffer)
 {
 	char	*temp;
+	char	*joined;
 	ssize_t	read_bytes;
 
 	if (BUFFER_SIZE >= INT_MAX)
@@ -23,12 +24,17 @@ char	*check_read(int fd, char *buffer)
 	if (!temp)
 		return (NULL);
 	read_bytes = read(fd, temp, BUFFER_SIZE);
-	while (!ft_strchr(buffer, '\n') && read_bytes > 0)
+	while (read_bytes > 0)
 	{
 		temp[read_bytes] = '\0';
-		buffer = ft_strjoin(buffer, temp);
-		if (!buffer)
+		joined = ft_strjoin(buffer, temp);
+		if (!joined)
+			return (free(temp), free(buffer), NULL);
+		free(buffer);
+		buffer = joined;
+		if (!buffer || ft_strchr(buffer, '\n'))
 			break ;
+		read_bytes = read(fd, temp, BUFFER_SIZE);
 	}
 	free(temp);
 	return (buffer);
@@ -38,10 +44,10 @@ char	*get_next(char *buffer)
 {
 	char	*new_buffer;
 	int		i;
-	int		j;
 
 	i = 0;
-	j = 0;
+	if (!buffer)
+		return (NULL);
 	while (buffer[i])
 	{
 		if (buffer[i] == '\n')
@@ -59,10 +65,8 @@ char	*get_the_line(char *buffer)
 {
 	char	*retu;
 	int		i;
-	int		j;
 
 	i = 0;
-	j = 0;
 	while (buffer[i] != '\0')
 	{
 		if (buffer[i] == '\n')
@@ -85,7 +89,12 @@ char	*get_next_line(int fd)
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
-		return (free(buffer), buffer = NULL);
+	{
+		if (buffer)
+			free(buffer);
+		buffer = NULL;
+		return (NULL);
+	}
 	buffer = check_read(fd, buffer);
 	if (!buffer)
 		return (NULL);
