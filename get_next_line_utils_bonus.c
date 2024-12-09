@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/04 14:47:10 by mradouan          #+#    #+#             */
-/*   Updated: 2024/12/09 11:28:01 by mradouan         ###   ########.fr       */
+/*   Created: 2024/12/09 10:39:34 by mradouan          #+#    #+#             */
+/*   Updated: 2024/12/09 11:34:46 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_strncpy(char *dest, char const *src, unsigned int n)
 {

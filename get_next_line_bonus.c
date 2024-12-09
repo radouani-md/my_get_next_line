@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/09 11:23:42 by mradouan          #+#    #+#             */
-/*   Updated: 2024/12/09 11:34:58 by mradouan         ###   ########.fr       */
+/*   Created: 2024/12/04 13:59:30 by mradouan          #+#    #+#             */
+/*   Updated: 2024/12/09 11:43:44 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*check_read(int fd, char *buffer, char *static_v)
 {
@@ -82,15 +82,15 @@ char	*get_the_line(char *buffer)
 
 char	*get_next_line(int fd)
 {
-	static char	*static_v;
+	static char	*static_v[OPEN_MAX];
 	char		*buffer;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd >= OPEN_MAX || read(fd, NULL, 0) < 0)
 	{
-		if (static_v)
-			free(static_v);
-		static_v = NULL;
+		if (static_v[fd])
+			free(static_v[fd]);
+		static_v[fd] = NULL;
 		return (NULL);
 	}
 	if (BUFFER_SIZE >= INT_MAX)
@@ -98,11 +98,11 @@ char	*get_next_line(int fd)
 	buffer = malloc(BUFFER_SIZE + 1);
 	if (!buffer)
 		return (NULL);
-	static_v = check_read(fd, buffer, static_v);
+	static_v[fd] = check_read(fd, buffer, static_v[fd]);
 	free(buffer);
-	if (!static_v)
-		return (free(static_v), NULL);
-	line = get_the_line(static_v);
-	static_v = get_next(static_v);
+	if (!static_v[fd])
+		return (free(static_v[fd]), NULL);
+	line = get_the_line(static_v[fd]);
+	static_v[fd] = get_next(static_v[fd]);
 	return (line);
 }
