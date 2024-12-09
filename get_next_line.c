@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 11:23:42 by mradouan          #+#    #+#             */
-/*   Updated: 2024/12/09 11:34:58 by mradouan         ###   ########.fr       */
+/*   Updated: 2024/12/09 19:29:25 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,47 +33,47 @@ char	*check_read(int fd, char *buffer, char *static_v)
 	return (static_v);
 }
 
-char	*get_next(char *buffer)
+char	*get_next(char *static_v)
 {
 	char	*new_buffer;
 	int		i;
 
 	i = 0;
-	while (buffer[i])
+	while (static_v[i])
 	{
-		if (buffer[i] == '\n')
+		if (static_v[i] == '\n')
 			break ;
 		i++;
 	}
-	if (!buffer[i])
-		return (free(buffer), NULL);
-	new_buffer = ft_strdup(buffer + i + 1);
-	free(buffer);
+	if (!static_v[i])
+		return (free(static_v), NULL);
+	new_buffer = ft_strdup(static_v + i + 1);
+	free(static_v);
 	return (new_buffer);
 }
 
-char	*get_the_line(char *buffer)
+char	*get_the_line(char *static_v)
 {
 	int		i;
 	char	*str;
 
 	i = 0;
-	if (!buffer[i])
+	if (!static_v[i])
 		return (NULL);
-	while (buffer[i] && buffer[i] != '\n')
+	while (static_v[i] && static_v[i] != '\n')
 		i++;
 	str = (char *)malloc(sizeof(char) * (i + 2));
 	if (!str)
 		return (NULL);
 	i = 0;
-	while (buffer[i] && buffer[i] != '\n')
+	while (static_v[i] && static_v[i] != '\n')
 	{
-		str[i] = buffer[i];
+		str[i] = static_v[i];
 		i++;
 	}
-	if (buffer[i] == '\n')
+	if (static_v[i] == '\n')
 	{
-		str[i] = buffer[i];
+		str[i] = static_v[i];
 		i++;
 	}
 	str[i] = '\0';
