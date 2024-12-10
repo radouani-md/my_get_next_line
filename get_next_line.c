@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 11:23:42 by mradouan          #+#    #+#             */
-/*   Updated: 2024/12/09 19:29:25 by mradouan         ###   ########.fr       */
+/*   Updated: 2024/12/10 16:47:37 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,9 @@ char	*get_next_line(int fd)
 		static_v = NULL;
 		return (NULL);
 	}
-	if (BUFFER_SIZE >= INT_MAX)
+	if (BUFFER_SIZE > INT_MAX)
 		return (NULL);
-	buffer = malloc(BUFFER_SIZE + 1);
+	buffer = malloc((size_t)BUFFER_SIZE + 1);
 	if (!buffer)
 		return (NULL);
 	static_v = check_read(fd, buffer, static_v);

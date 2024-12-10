@@ -6,29 +6,11 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 10:39:34 by mradouan          #+#    #+#             */
-/*   Updated: 2024/12/09 11:34:46 by mradouan         ###   ########.fr       */
+/*   Updated: 2024/12/09 23:21:47 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
-
-char	*ft_strncpy(char *dest, char const *src, unsigned int n)
-{
-	unsigned int	i;
-
-	i = 0;
-	while (i < n && src[i] != '\0')
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	while (i < n)
-	{
-		dest[i] = '\0';
-		i++;
-	}
-	return (dest);
-}
 
 char	*ft_strdup(char *src)
 {
