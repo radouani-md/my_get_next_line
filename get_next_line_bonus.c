@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:59:30 by mradouan          #+#    #+#             */
-/*   Updated: 2024/12/10 16:48:39 by mradouan         ###   ########.fr       */
+/*   Updated: 2024/12/11 12:17:31 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,52 +52,54 @@ char	*get_next(char *buffer)
 	return (new_buffer);
 }
 
-char	*get_the_line(char *buffer)
+char	*get_the_line(char *static_v)
 {
 	int		i;
 	char	*str;
 
 	i = 0;
-	if (!buffer[i])
+	if (!static_v[i])
 		return (NULL);
-	while (buffer[i] && buffer[i] != '\n')
+	while (static_v[i] && static_v[i] != '\n')
 		i++;
-	str = (char *)malloc(sizeof(char) * (i + 2));
+	if (static_v[i] == '\0')
+		str = (char *)malloc(sizeof(char) * (i + 1));
+	else
+		str = (char *)malloc(sizeof(char) * (i + 2));
 	if (!str)
 		return (NULL);
 	i = 0;
-	while (buffer[i] && buffer[i] != '\n')
+	while (static_v[i] && static_v[i] != '\n')
 	{
-		str[i] = buffer[i];
+		str[i] = static_v[i];
 		i++;
 	}
-	if (buffer[i] == '\n')
-	{
-		str[i] = buffer[i];
-		i++;
-	}
+	if (static_v[i] == '\n')
+		str[i++] = '\n';
 	str[i] = '\0';
 	return (str);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*static_v[OPEN_MAX];
+	static char	*static_v[10240];
 	char		*buffer;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || fd >= OPEN_MAX || read(fd, NULL, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 10240 || read(fd, NULL, 0) < 0)
 	{
 		if (static_v[fd])
 			free(static_v[fd]);
 		static_v[fd] = NULL;
 		return (NULL);
 	}
-	if (BUFFER_SIZE > INT_MAX)
-		return (NULL);
 	buffer = malloc((size_t)BUFFER_SIZE + 1);
 	if (!buffer)
+	{
+		free(static_v[fd]);
+		static_v[fd] = NULL;
 		return (NULL);
+	}
 	static_v[fd] = check_read(fd, buffer, static_v[fd]);
 	free(buffer);
 	if (!static_v[fd])

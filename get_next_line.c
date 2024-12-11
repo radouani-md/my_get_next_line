@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 11:23:42 by mradouan          #+#    #+#             */
-/*   Updated: 2024/12/10 16:47:37 by mradouan         ###   ########.fr       */
+/*   Updated: 2024/12/11 11:33:00 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,10 @@ char	*get_the_line(char *static_v)
 		return (NULL);
 	while (static_v[i] && static_v[i] != '\n')
 		i++;
-	str = (char *)malloc(sizeof(char) * (i + 2));
+	if (static_v[i] == '\0')
+		str = (char *)malloc(sizeof(char) * (i + 1));
+	else
+		str = (char *)malloc(sizeof(char) * (i + 2));
 	if (!str)
 		return (NULL);
 	i = 0;
@@ -72,10 +75,7 @@ char	*get_the_line(char *static_v)
 		i++;
 	}
 	if (static_v[i] == '\n')
-	{
-		str[i] = static_v[i];
-		i++;
-	}
+		str[i++] = '\n';
 	str[i] = '\0';
 	return (str);
 }
@@ -86,18 +86,20 @@ char	*get_next_line(int fd)
 	char		*buffer;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd >= OPEN_MAX || read(fd, NULL, 0) < 0)
 	{
 		if (static_v)
 			free(static_v);
 		static_v = NULL;
 		return (NULL);
 	}
-	if (BUFFER_SIZE > INT_MAX)
-		return (NULL);
 	buffer = malloc((size_t)BUFFER_SIZE + 1);
 	if (!buffer)
+	{
+		free(static_v);
+		static_v = NULL;
 		return (NULL);
+	}
 	static_v = check_read(fd, buffer, static_v);
 	free(buffer);
 	if (!static_v)
